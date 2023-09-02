@@ -36,7 +36,7 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public HttpEntity<?> getImage(long id) {
         Optional<Image> optional = imageRepository.findById(id);
-        if(optional.isEmpty()) return ResponseEntity.status(404).body(
+        if(optional.isPresent()) return ResponseEntity.status(404).body(
                 new CustomError("Image not found", 404)
         );
         Image dbImage = optional.get();
