@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("x-access-token");
-        if(request.getServletPath().equals("/api/auth/login") || request.getServletPath().contains("/api/image/view/")) {
+        if(request.getServletPath().contains("/api/auth/login") || request.getServletPath().contains("/api/image/view/")) {
             filterChain.doFilter(request, response);
             return;
         }
