@@ -43,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         Optional<User> optionalUser = userRepository.findByAccessToken(token);
-        if (optionalUser.isPresent()) {
+        if (!optionalUser.isPresent()) {
             response.setStatus(401);
             response.setContentType("application/json");
             String json = new ObjectMapper().writer().writeValueAsString(new CustomError("Token expired or does not exist", 403));
