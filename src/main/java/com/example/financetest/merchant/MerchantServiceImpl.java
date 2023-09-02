@@ -17,7 +17,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public HttpEntity<?> searchMerchantByQuery(String query) {
-        return ResponseEntity.ok(merchantRepository.searchByQuery(query));
+        return ResponseEntity.ok(merchantRepository.searchByQuery(query.toUpperCase()));
     }
 
     @Override

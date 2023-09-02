@@ -10,8 +10,8 @@ import java.util.List;
 public interface MerchantRepository extends JpaRepository<Merchant, Long> {
 
     @Query(value = "select * from merchant where " +
-            "UPPER(merchant.name) like UPPER(%:query%) or " +
-            "UPPER(merchant.phone) like UPPER(%:query%) or " +
-            "UPPER(merchant.info) like UPPER(%:query%)", nativeQuery = true)
+            "UPPER(merchant.name) like %:query% or " +
+            "UPPER(merchant.phone) like %:query% or " +
+            "UPPER(merchant.info) like %:query%", nativeQuery = true)
     List<Merchant> searchByQuery(String query);
 }
