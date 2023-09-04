@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -60,18 +61,24 @@ public class User implements UserDetails {
     @ManyToOne
     Role role;
 
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonView({Views.Public.class, Views.Internal.class})
     boolean enabled;
 
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-        List<Permission> permissionList = role.getPermissionList();
-        for (Permission permission : permissionList) {
-            grantedAuthorityList.add((GrantedAuthority) permission::name);
+
+        if (enabled) {
+            List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+            List<Permission> permissionList = role.getPermissionList();
+            for (Permission permission : permissionList) {
+                grantedAuthorityList.add((GrantedAuthority) permission::name);
+            }
+            return grantedAuthorityList;
+        } else {
+            return Collections.emptyList();
         }
-        return grantedAuthorityList;
     }
 
     @JsonIgnore

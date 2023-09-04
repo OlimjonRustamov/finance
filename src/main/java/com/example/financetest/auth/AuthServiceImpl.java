@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -28,6 +29,10 @@ public class AuthServiceImpl implements AuthService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                if (user.getAccessToken() == null || user.getAccessToken().isEmpty()) {
+                    user.setAccessToken(UUID.randomUUID().toString());
+                    userRepository.save(user);
+                }
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(401).body(
