@@ -1,6 +1,7 @@
 package com.example.financetest.profile;
 
 import com.example.financetest.error.CustomError;
+import com.example.financetest.error.SuccessData;
 import com.example.financetest.user.User;
 import com.example.financetest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,12 @@ public class ProfileServiceImpl implements ProfileService {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
                     new CustomError("Incorrect current password inserted. Please check old password is correct", 406));
         }
+    }
+
+    @Override
+    public HttpEntity<?> logout(User user) {
+        user.setAccessToken(null);
+        userRepository.save(user);
+        return ResponseEntity.ok(new SuccessData("Token is made expired"));
     }
 }

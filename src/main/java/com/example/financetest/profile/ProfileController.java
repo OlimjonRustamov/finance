@@ -31,4 +31,9 @@ public class ProfileController {
     HttpEntity<?> changePassword(@CurrentUser User user, @Valid @RequestBody ChangePasswordDto dto) {
         return profileService.changePassword(user, dto);
     }
+
+    @PostMapping("/logout")
+    HttpEntity<?> logout(@CurrentUser User user) {
+        return profileService.logout(user);
+    }
 }

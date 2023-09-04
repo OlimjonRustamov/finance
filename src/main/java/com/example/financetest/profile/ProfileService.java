@@ -9,4 +9,6 @@ public interface ProfileService {
 
     HttpEntity<?> changePassword(User user, ChangePasswordDto dto);
 
+    HttpEntity<?> logout(User user);
+
 }
