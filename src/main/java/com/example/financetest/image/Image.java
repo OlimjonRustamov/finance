@@ -17,23 +17,26 @@ import javax.persistence.*;
 public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	@JsonView(Views.Public.class)
 	private long id;
 
 	@Column
 	@JsonIgnore
+	@JsonView(Views.Public.class)
 	private long createdAt = System.currentTimeMillis();
 
 	@JsonProperty("content_type")
+	@JsonView(Views.Public.class)
 	private String contentType;
 
 	@JsonIgnore
 	private byte[] image;
 
+	@JsonView(Views.Public.class)
 	private String link;
 
 	public String getLink() {
-		return "localhost:8080/api/image/view/" + id;
+		return "https://finance-uz-a172736792a3.herokuapp.com" + "/api/image/view/" + id;
 	}
 	public Image(String contentType, byte[] image) {
 		this.contentType = contentType;
